@@ -211,6 +211,36 @@
             font-size: 15px;
         }
 
+        /* Progress Bar in Table */
+        .progress-column {
+            width: 200px;
+        }
+
+        .table-progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 5px;
+        }
+
+        .table-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ef4444 0%, #f59e0b 25%, #eab308 50%, #22c55e 75%, #22c55e 100%);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 500;
+            text-align: center;
+        }
+
         .status-badge {
             padding: 6px 12px;
             border-radius: 20px;
@@ -461,6 +491,10 @@
                 width: 95%;
                 margin: 10% auto;
             }
+
+            .progress-column {
+                width: 150px;
+            }
         }
     </style>
 </head>
@@ -527,7 +561,7 @@
                         <th>เลขที่ใบเสนอราคา</th>
                         <th>วันที่สร้าง</th>
                         <th>ชื่อลูกค้า</th>
-                        <th>วันหมดอายุ</th>
+                        <th>ความคืบหน้า</th>
                         <th>สถานะ</th>
                         <th>ผู้รับผิดชอบ</th>
                         <th>หมายเหตุ</th>
@@ -568,11 +602,6 @@
                     <div class="form-group">
                         <label>ชื่อลูกค้า *</label>
                         <input type="text" id="addCustomerName" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>วันหมดอายุ *</label>
-                        <input type="date" id="addExpireDate" required>
                     </div>
                     
                     <div class="form-group">
@@ -625,11 +654,6 @@
                     <div class="form-group">
                         <label>ชื่อลูกค้า *</label>
                         <input type="text" id="editCustomerName" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>วันหมดอายุ *</label>
-                        <input type="date" id="editExpireDate" required>
                     </div>
                     
                     <div class="form-group">
@@ -1008,6 +1032,9 @@
             tbody.innerHTML = filteredQuotations.map(quote => {
                 const progress = calculateProgress(quote.quoteNo);
                 const progressClass = getProgressClass(progress);
+                const quoteTasks = tasks[quote.quoteNo] || [];
+                const completedTasks = quoteTasks.filter(t => t.status === 'done').length;
+                const totalTasks = quoteTasks.length;
                 
                 return `
                     <tr>
@@ -1019,7 +1046,12 @@
                         </td>
                         <td>${formatDate(quote.createDate)}</td>
                         <td>${quote.customerName}</td>
-                        <td>${formatDate(quote.expireDate)}</td>
+                        <td class="progress-column">
+                            <div class="table-progress-bar">
+                                <div class="table-progress-fill" style="width: ${progress}%"></div>
+                            </div>
+                            <div class="progress-text">${completedTasks}/${totalTasks} งาน (${progress}%)</div>
+                        </td>
                         <td><span class="status-badge status-${quote.status}">${getStatusText(quote.status)}</span></td>
                         <td>${quote.responsible}</td>
                         <td>${quote.note || '-'}</td>
@@ -1080,7 +1112,6 @@
             document.getElementById('addQuoteNo').value = newQuoteNo;
             document.getElementById('addCreateDate').value = new Date().toISOString().split('T')[0];
             document.getElementById('addCustomerName').value = '';
-            document.getElementById('addExpireDate').value = '';
             document.getElementById('addStatus').value = 'pending';
             document.getElementById('addResponsible').value = '';
             document.getElementById('addNote').value = '';
@@ -1103,7 +1134,6 @@
                 quoteNo: document.getElementById('addQuoteNo').value,
                 createDate: document.getElementById('addCreateDate').value,
                 customerName: document.getElementById('addCustomerName').value.trim(),
-                expireDate: document.getElementById('addExpireDate').value,
                 status: document.getElementById('addStatus').value,
                 responsible: document.getElementById('addResponsible').value.trim(),
                 note: document.getElementById('addNote').value.trim()
@@ -1131,7 +1161,6 @@
             document.getElementById('editQuoteNo').value = quote.quoteNo;
             document.getElementById('editCreateDate').value = quote.createDate;
             document.getElementById('editCustomerName').value = quote.customerName;
-            document.getElementById('editExpireDate').value = quote.expireDate;
             document.getElementById('editStatus').value = quote.status;
             document.getElementById('editResponsible').value = quote.responsible;
             document.getElementById('editNote').value = quote.note || '';
@@ -1154,7 +1183,6 @@
             const data = {
                 createDate: document.getElementById('editCreateDate').value,
                 customerName: document.getElementById('editCustomerName').value.trim(),
-                expireDate: document.getElementById('editExpireDate').value,
                 status: document.getElementById('editStatus').value,
                 responsible: document.getElementById('editResponsible').value.trim(),
                 note: document.getElementById('editNote').value.trim()
@@ -1583,25 +1611,28 @@
     
     ===================================================
     
-    🎯 คุณสมบัติ:
-    - ✅ เพิ่ม/แก้ไข/ลบ ใบเสนอราคา
-    - ✅ จัดการงาน (Tasks) ในแต่ละใบเสนอราคา
-    - ✅ ติดตามความคืบหน้าด้วย Progress Circle
-    - ✅ กรองและค้นหาข้อมูل
-    - ✅ Dashboard สรุปสถานะ
-    - ✅ Responsive Design
-    - ✅ Firebase Firestore Integration
-    - ✅ Real-time Updates (Optional)
-    - ✅ Error Handling ครบถ้วน
-    - ✅ Keyboard Shortcuts (Ctrl+N, Escape)
+    🎯 คุณสมบัติที่อัปเดต:
+    - ✅ เอาฟิลด์ "วันหมดอายุ" ออกแล้ว
+    - ✅ เพิ่ม Progress Bar แสดงเปอร์เซ็นต์ความคืบหน้า Tasks
+    - ✅ แสดงจำนวนงานที่เสร็จ/ทั้งหมด
+    - ✅ Progress Bar มีสีที่เปลี่ยนตามเปอร์เซ็นต์
+    - ✅ ยังคงมี Progress Circle เพื่อให้เห็นภาพรวมได้ง่าย
+    - ✅ การทำงานทั้งหมดเหมือนเดิม แค่เปลี่ยน UI
+    
+    📊 Progress Bar Features:
+    - สีเปลี่ยนจากแดง (0%) ไปเขียว (100%)
+    - แสดงข้อความ "X/Y งาน (Z%)"
+    - อัปเดตแบบ Real-time เมื่อเปลี่ยนสถานะงาน
+    - Responsive บนมือถือ
     
     📱 การใช้งาน:
     - บันทึกเป็นไฟล์ .html
     - ตั้งค่า Firebase Config
     - เปิดด้วย Web Browser
-    - เริ่มใช้งานได้ทันที!
+    - เริ่มเพิ่มใบเสนอราคาและงานได้เลย!
     
     ===================================================
     -->
+
 </body>
 </html>
