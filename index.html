@@ -13,72 +13,82 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f8fafc;
-            color: #334155;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
 
+        /* Header */
         .header {
             text-align: center;
             margin-bottom: 30px;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .header h1 {
-            color: #1e293b;
-            font-size: 2.5rem;
+            color: #2c3e50;
+            font-size: 2rem;
             margin-bottom: 10px;
         }
 
         .header p {
-            color: #64748b;
-            font-size: 1.1rem;
+            color: #7f8c8d;
+            font-size: 1rem;
         }
 
         /* Summary Cards */
         .summary-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
             margin-bottom: 30px;
         }
 
         .summary-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #3498db;
         }
 
         .summary-card h3 {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
+            color: #7f8c8d;
             margin-bottom: 10px;
-            opacity: 0.9;
         }
 
         .summary-card .number {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: bold;
-            margin: 10px 0;
+            color: #2c3e50;
         }
 
-        .summary-card.pending { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-        .summary-card.approved { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-        .summary-card.rejected { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-        .summary-card.expired { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .summary-card.pending { border-left-color: #f39c12; }
+        .summary-card.approved { border-left-color: #27ae60; }
+        .summary-card.completed { border-left-color: #16a085; }
+        .summary-card.waiting_feedback { border-left-color: #9b59b6; }
 
         /* Controls */
         .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
             flex-wrap: wrap;
             gap: 15px;
         }
@@ -86,52 +96,60 @@
         .btn {
             padding: 10px 20px;
             border: none;
-            border-radius: 8px;
+            border-radius: 5px;
             cursor: pointer;
             font-size: 14px;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: background-color 0.3s ease;
         }
 
         .btn-primary {
-            background: #22c55e;
+            background: #3498db;
             color: white;
         }
 
         .btn-primary:hover {
-            background: #16a34a;
-            transform: translateY(-1px);
+            background: #2980b9;
         }
 
         .btn-secondary {
-            background: #3b82f6;
+            background: #95a5a6;
             color: white;
         }
 
         .btn-secondary:hover {
-            background: #2563eb;
+            background: #7f8c8d;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #219a52;
         }
 
         .btn-warning {
-            background: #f59e0b;
+            background: #f39c12;
             color: white;
         }
 
         .btn-warning:hover {
-            background: #d97706;
+            background: #e67e22;
         }
 
         .btn-danger {
-            background: #ef4444;
+            background: #e74c3c;
             color: white;
         }
 
         .btn-danger:hover {
-            background: #dc2626;
+            background: #c0392b;
         }
 
         .btn-small {
-            padding: 6px 12px;
+            padding: 5px 10px;
             font-size: 12px;
         }
 
@@ -144,119 +162,129 @@
         .search-box input,
         .search-box select {
             padding: 8px 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             font-size: 14px;
+        }
+
+        .search-box input:focus,
+        .search-box select:focus {
+            outline: none;
+            border-color: #3498db;
         }
 
         /* Table */
         .table-container {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow-x: auto;
+            overflow-y: visible;
         }
 
         table {
             width: 100%;
+            min-width: 1000px;
             border-collapse: collapse;
         }
 
         th {
-            background: #1e293b;
+            background: #34495e;
             color: white;
-            padding: 15px;
+            padding: 12px 8px;
             text-align: left;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         td {
-            padding: 15px;
-            border-bottom: 1px solid #f1f5f9;
+            padding: 12px 8px;
+            border-bottom: 1px solid #ecf0f1;
             vertical-align: middle;
+            white-space: nowrap;
         }
+
+        /* Column widths */
+        th:nth-child(1), td:nth-child(1) { min-width: 140px; } /* เลขที่ */
+        th:nth-child(2), td:nth-child(2) { min-width: 100px; } /* วันที่ */
+        th:nth-child(3), td:nth-child(3) { min-width: 180px; white-space: normal; } /* ลูกค้า */
+        th:nth-child(4), td:nth-child(4) { min-width: 120px; } /* ความคืบหน้า */
+        th:nth-child(5), td:nth-child(5) { min-width: 100px; } /* สถานะ */
+        th:nth-child(6), td:nth-child(6) { min-width: 120px; } /* ผู้รับผิดชอบ */
+        th:nth-child(7), td:nth-child(7) { min-width: 150px; white-space: normal; max-width: 200px; } /* หมายเหตุ */
+        th:nth-child(8), td:nth-child(8) { min-width: 160px; } /* จัดการ */
 
         tr:hover {
-            background: #f8fafc;
+            background: #f8f9fa;
         }
 
-        .quote-cell {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .quote-no {
+            font-weight: 600;
+            color: #2c3e50;
         }
 
-        .progress-circle {
-            width: 40px;
-            height: 40px;
+        /* Progress */
+        .progress-simple {
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
+            background: #ecf0f1;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
             color: white;
         }
 
-        .progress-0 { background: #ef4444; }
-        .progress-25 { background: #f59e0b; }
-        .progress-50 { background: #eab308; }
-        .progress-75 { background: #22c55e; }
-        .progress-100 { background: #16a34a; }
+        .progress-0 { background: #e74c3c; }
+        .progress-25 { background: #f39c12; }
+        .progress-50 { background: #f1c40f; }
+        .progress-75 { background: #2ecc71; }
+        .progress-100 { background: #27ae60; }
 
-        .quote-no {
-            font-weight: 600;
-            color: #3b82f6;
-            font-size: 15px;
-        }
-
-        /* Progress Bar in Table */
-        .progress-column {
-            width: 200px;
-        }
-
-        .table-progress-bar {
+        .progress-bar-simple {
             width: 100%;
-            height: 20px;
-            background: #e5e7eb;
+            height: 15px;
+            background: #ecf0f1;
             border-radius: 10px;
             overflow: hidden;
-            position: relative;
             margin-bottom: 5px;
         }
 
-        .table-progress-fill {
+        .progress-fill-simple {
             height: 100%;
-            background: linear-gradient(90deg, #ef4444 0%, #f59e0b 25%, #eab308 50%, #22c55e 75%, #22c55e 100%);
+            background: #3498db;
             border-radius: 10px;
             transition: width 0.3s ease;
-            position: relative;
         }
 
-        .progress-text {
+        .progress-text-simple {
             font-size: 12px;
-            color: #6b7280;
-            font-weight: 500;
+            color: #7f8c8d;
             text-align: center;
         }
 
+        /* Status Badge */
         .status-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
+            padding: 5px 12px;
+            border-radius: 15px;
             font-size: 12px;
-            font-weight: 600;
-            text-align: center;
+            font-weight: 500;
         }
 
-        .status-pending { background: #fef3c7; color: #92400e; }
-        .status-approved { background: #dbeafe; color: #1e40af; }
-        .status-rejected { background: #fecaca; color: #991b1b; }
-        .status-expired { background: #f3f4f6; color: #374151; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-approved { background: #d4edda; color: #155724; }
+        .status-completed { background: #d1ecf1; color: #0c5460; }
+        .status-waiting_feedback { background: #e2e3f7; color: #5a5a8a; }
 
         .actions {
             display: flex;
-            gap: 6px;
+            gap: 5px;
         }
 
         /* Modals */
@@ -274,74 +302,75 @@
         .modal-content {
             background: white;
             margin: 5% auto;
-            border-radius: 15px;
+            border-radius: 8px;
             width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            max-width: 500px;
+            max-height: 85vh;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
         }
 
         .modal-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #34495e;
             color: white;
             padding: 20px;
+            border-radius: 8px 8px 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .modal-header h2 {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
         }
 
         .close-btn {
             background: none;
             border: none;
             color: white;
-            font-size: 24px;
+            font-size: 20px;
             cursor: pointer;
-            padding: 5px;
         }
 
         .modal-body {
-            padding: 25px;
-            max-height: 60vh;
+            padding: 20px;
+            flex: 1;
             overflow-y: auto;
+            min-height: 0;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            color: #374151;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #2c3e50;
         }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             font-size: 14px;
-            transition: border-color 0.3s ease;
         }
 
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            border-color: #3498db;
         }
 
         .form-group textarea {
-            height: 80px;
+            height: 60px;
             resize: vertical;
         }
 
@@ -350,17 +379,27 @@
             gap: 10px;
             justify-content: flex-end;
             padding: 20px;
-            border-top: 1px solid #f1f5f9;
+            border-top: 1px solid #ecf0f1;
+            flex-shrink: 0;
         }
 
-        /* Task Modal Styles */
+        /* Task Modal Specific Styles */
+        .task-modal-body {
+            padding: 15px;
+            flex: 1;
+            overflow-y: auto;
+            min-height: 0;
+            max-height: 60vh;
+        }
+
         .task-form {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
             padding: 15px;
-            background: #f8fafc;
-            border-radius: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            flex-shrink: 0;
         }
 
         .task-form input {
@@ -369,21 +408,41 @@
 
         .task-list {
             list-style: none;
+            max-height: 40vh;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .task-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .task-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .task-list::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+
+        .task-list::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
 
         .task-item {
             display: flex;
             align-items: center;
-            padding: 15px;
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
+            padding: 10px;
+            border: 1px solid #ecf0f1;
+            border-radius: 5px;
             margin-bottom: 10px;
             background: white;
         }
 
         .task-checkbox {
-            margin-right: 15px;
-            transform: scale(1.2);
+            margin-right: 10px;
         }
 
         .task-details {
@@ -391,29 +450,29 @@
         }
 
         .task-name {
-            font-weight: 600;
+            font-weight: 500;
             margin-bottom: 5px;
         }
 
         .task-status-select {
-            padding: 4px 8px;
-            font-size: 12px;
-            border-radius: 6px;
-            border: 1px solid #d1d5db;
+            padding: 3px 6px;
+            font-size: 11px;
+            border-radius: 3px;
+            border: 1px solid #ddd;
         }
 
         .progress-summary {
-            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
-            padding: 20px;
-            border-radius: 10px;
+            background: #e8f4fd;
+            padding: 15px;
+            border-radius: 5px;
             margin-bottom: 20px;
             text-align: center;
         }
 
         .progress-bar {
             width: 100%;
-            height: 20px;
-            background: #e5e7eb;
+            height: 15px;
+            background: #ecf0f1;
             border-radius: 10px;
             overflow: hidden;
             margin: 10px 0;
@@ -421,23 +480,23 @@
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #3b82f6, #22c55e);
+            background: #3498db;
             border-radius: 10px;
             transition: width 0.3s ease;
         }
 
-        /* Loading */
-        .loading {
+        /* Loading & Error */
+        .loading, .error {
             text-align: center;
             padding: 40px;
         }
 
         .spinner {
             display: inline-block;
-            width: 24px;
-            height: 24px;
-            border: 3px solid #f3f4f6;
-            border-top: 3px solid #3b82f6;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f4f6;
+            border-top: 2px solid #3498db;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -447,16 +506,10 @@
             100% { transform: rotate(360deg); }
         }
 
-        .error {
-            text-align: center;
-            padding: 40px;
-            color: #ef4444;
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .container {
-                padding: 15px;
+                padding: 10px;
             }
 
             .controls {
@@ -468,32 +521,73 @@
                 flex-direction: column;
             }
 
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
             table {
-                font-size: 13px;
+                min-width: 800px;
+                font-size: 12px;
             }
 
             th, td {
-                padding: 10px 8px;
+                padding: 8px 6px;
             }
 
             .actions {
                 flex-direction: column;
-                gap: 4px;
+                gap: 3px;
             }
 
-            .progress-circle {
-                width: 32px;
-                height: 32px;
+            .progress-simple {
+                width: 35px;
+                height: 35px;
                 font-size: 10px;
             }
 
             .modal-content {
                 width: 95%;
-                margin: 10% auto;
+                margin: 10px auto;
+                max-height: 90vh;
             }
 
-            .progress-column {
-                width: 150px;
+            .task-modal-body {
+                max-height: 50vh;
+            }
+
+            .task-list {
+                max-height: 30vh;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .table-container {
+                margin: 0 -10px;
+                border-radius: 0;
+            }
+
+            table {
+                min-width: 700px;
+            }
+
+            th, td {
+                padding: 6px 4px;
+                font-size: 11px;
+            }
+
+            .btn-small {
+                padding: 4px 8px;
+                font-size: 10px;
             }
         }
     </style>
@@ -502,38 +596,34 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <h1>🔥 ระบบจัดการใบเสนอราคา</h1>
-            <p>จัดการใบเสนอราคาและติดตามความคืบหน้าด้วย Firebase</p>
+            <h1>ระบบจัดการใบเสนอราคา</h1>
+            <p>จัดการใบเสนอราคาและติดตามความคืบหน้า</p>
         </div>
 
         <!-- Summary Cards -->
         <div class="summary-grid">
-            <div class="summary-card pending">
-                <h3>รอดำเนินการ</h3>
-                <div class="number" id="pendingCount">-</div>
-                <p>รายการ</p>
+            <div class="summary-card completed">
+                <h3>จบงานแล้ว</h3>
+                <div class="number" id="completedCount">-</div>
+            </div>
+            <div class="summary-card waiting_feedback">
+                <h3>เสร็จแล้ว(รอfeedback)</h3>
+                <div class="number" id="waitingFeedbackCount">-</div>
             </div>
             <div class="summary-card approved">
                 <h3>อนุมัติแล้ว</h3>
                 <div class="number" id="approvedCount">-</div>
-                <p>รายการ</p>
             </div>
-            <div class="summary-card rejected">
-                <h3>ไม่อนุมัติ</h3>
-                <div class="number" id="rejectedCount">-</div>
-                <p>รายการ</p>
-            </div>
-            <div class="summary-card expired">
-                <h3>หมดอายุ</h3>
-                <div class="number" id="expiredCount">-</div>
-                <p>รายการ</p>
+            <div class="summary-card pending">
+                <h3>รอดำเนินการ</h3>
+                <div class="number" id="pendingCount">-</div>
             </div>
         </div>
 
         <!-- Controls -->
         <div class="controls">
-            <button class="btn btn-primary" onclick="openAddModal()">
-                ✅ เพิ่มใบเสนอราคา
+            <button class="btn btn-success" onclick="openAddModal()">
+                + เพิ่มใบเสนอราคา
             </button>
             
             <div class="search-box">
@@ -541,14 +631,14 @@
                     <option value="">ทุกสถานะ</option>
                     <option value="pending">รอดำเนินการ</option>
                     <option value="approved">อนุมัติแล้ว</option>
-                    <option value="rejected">ไม่อนุมัติ</option>
-                    <option value="expired">หมดอายุ</option>
+                    <option value="completed">จบงานแล้ว</option>
+                    <option value="waiting_feedback">เสร็จแล้ว(รอfeedback)</option>
                 </select>
                 
                 <input type="text" id="searchInput" placeholder="ค้นหา..." oninput="filterQuotations()">
                 
                 <button class="btn btn-secondary" onclick="loadQuotations()">
-                    🔄 รีเฟรช
+                    รีเฟรช
                 </button>
             </div>
         </div>
@@ -558,9 +648,9 @@
             <table>
                 <thead>
                     <tr>
-                        <th>เลขที่ใบเสนอราคา</th>
-                        <th>วันที่สร้าง</th>
-                        <th>ชื่อลูกค้า</th>
+                        <th>เลขที่</th>
+                        <th>วันที่</th>
+                        <th>ลูกค้า</th>
                         <th>ความคืบหน้า</th>
                         <th>สถานะ</th>
                         <th>ผู้รับผิดชอบ</th>
@@ -572,7 +662,7 @@
                     <tr>
                         <td colspan="8" class="loading">
                             <div class="spinner"></div>
-                            <p>กำลังโหลดข้อมูลจาก Firebase...</p>
+                            <p>กำลังโหลดข้อมูล...</p>
                         </td>
                     </tr>
                 </tbody>
@@ -580,7 +670,7 @@
         </div>
     </div>
 
-    <!-- Add Quotation Modal -->
+    <!-- Add Modal -->
     <div id="addModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -600,7 +690,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label>ชื่อลูกค้า *</label>
+                        <label>ชื่อลูกค้า</label>
                         <input type="text" id="addCustomerName" required>
                     </div>
                     
@@ -609,13 +699,13 @@
                         <select id="addStatus">
                             <option value="pending">รอดำเนินการ</option>
                             <option value="approved">อนุมัติแล้ว</option>
-                            <option value="rejected">ไม่อนุมัติ</option>
-                            <option value="expired">หมดอายุ</option>
+                            <option value="completed">จบงานแล้ว</option>
+                            <option value="waiting_feedback">เสร็จแล้ว(รอfeedback)</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label>ผู้รับผิดชอบ *</label>
+                        <label>ผู้รับผิดชอบ</label>
                         <input type="text" id="addResponsible" required>
                     </div>
                     
@@ -626,13 +716,13 @@
                 </form>
             </div>
             <div class="form-actions">
-                <button type="button" class="btn btn-primary" onclick="addQuotation()">เพิ่มใบเสนอราคา</button>
-                <button type="button" class="btn" onclick="closeAddModal()" style="background: #6b7280; color: white;">ยกเลิก</button>
+                <button type="button" class="btn btn-success" onclick="addQuotation()">เพิ่ม</button>
+                <button type="button" class="btn btn-secondary" onclick="closeAddModal()">ยกเลิก</button>
             </div>
         </div>
     </div>
 
-    <!-- Edit Quotation Modal -->
+    <!-- Edit Modal -->
     <div id="editModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -652,7 +742,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label>ชื่อลูกค้า *</label>
+                        <label>ชื่อลูกค้า</label>
                         <input type="text" id="editCustomerName" required>
                     </div>
                     
@@ -661,13 +751,13 @@
                         <select id="editStatus">
                             <option value="pending">รอดำเนินการ</option>
                             <option value="approved">อนุมัติแล้ว</option>
-                            <option value="rejected">ไม่อนุมัติ</option>
-                            <option value="expired">หมดอายุ</option>
+                            <option value="completed">จบงานแล้ว</option>
+                            <option value="waiting_feedback">เสร็จแล้ว(รอfeedback)</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label>ผู้รับผิดชอบ *</label>
+                        <label>ผู้รับผิดชอบ</label>
                         <input type="text" id="editResponsible" required>
                     </div>
                     
@@ -678,39 +768,39 @@
                 </form>
             </div>
             <div class="form-actions">
-                <button type="button" class="btn btn-primary" onclick="saveQuotation()">บันทึกการแก้ไข</button>
-                <button type="button" class="btn" onclick="closeEditModal()" style="background: #6b7280; color: white;">ยกเลิก</button>
+                <button type="button" class="btn btn-success" onclick="saveQuotation()">บันทึก</button>
+                <button type="button" class="btn btn-secondary" onclick="closeEditModal()">ยกเลิก</button>
             </div>
         </div>
     </div>
 
-    <!-- Task Management Modal -->
+    <!-- Task Modal -->
     <div id="taskModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="taskModalTitle">จัดการงาน</h2>
                 <button class="close-btn" onclick="closeTaskModal()">&times;</button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body task-modal-body">
                 <!-- Progress Summary -->
                 <div class="progress-summary">
-                    <h3>ความคืบหน้าโดยรวม</h3>
+                    <h3>ความคืบหน้า</h3>
                     <div class="progress-bar">
                         <div class="progress-fill" id="overallProgress" style="width: 0%"></div>
                     </div>
-                    <p><span id="progressText">0 จาก 0 งาน</span> เสร็จสิ้นแล้ว (<span id="progressPercent">0</span>%)</p>
+                    <p><span id="progressText">0 จาก 0 งาน</span> เสร็จแล้ว (<span id="progressPercent">0</span>%)</p>
                 </div>
 
                 <!-- Add Task Form -->
                 <div class="task-form">
                     <input type="text" id="taskName" placeholder="ชื่องาน...">
                     <select id="taskStatus">
-                        <option value="todo">รอดำเนินการ</option>
+                        <option value="todo">รอทำ</option>
                         <option value="inprogress">กำลังทำ</option>
                         <option value="done">เสร็จแล้ว</option>
                     </select>
-                    <button type="button" class="btn btn-primary btn-small" onclick="addTask()">เพิ่มงาน</button>
-                    <button type="button" class="btn btn-small" id="cancelEditBtn" onclick="cancelEdit()" style="display: none; background: #ef4444; color: white;">ยกเลิก</button>
+                    <button type="button" class="btn btn-success btn-small" onclick="addTask()">เพิ่ม</button>
+                    <button type="button" class="btn btn-danger btn-small" id="cancelEditBtn" onclick="cancelEdit()" style="display: none;">ยกเลิก</button>
                 </div>
 
                 <!-- Task List -->
@@ -722,11 +812,7 @@
     </div>
 
     <script type="module">
-        // ===========================================
-        // 🔥 Firebase Configuration & Setup
-        // ===========================================
-
-        // Import Firebase modules
+        // Firebase Configuration
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { 
             getFirestore, 
@@ -744,7 +830,7 @@
             where
         } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-        // 🔥 Firebase Configuration - แทนที่ด้วย config ของคุณ
+        // Firebase Config - แทนที่ด้วย config ของคุณ
         const firebaseConfig = {
             apiKey: "AIzaSyB86yf4AqeY1l_94_Cg76V1gJM3HVxjg88",
             authDomain: "quotation-system-9e63f.firebaseapp.com",
@@ -763,10 +849,7 @@
         const QUOTATIONS_COLLECTION = 'quotations';
         const TASKS_COLLECTION = 'tasks';
 
-        // ===========================================
         // Global Variables
-        // ===========================================
-        
         let quotations = [];
         let filteredQuotations = [];
         let tasks = {};
@@ -774,13 +857,10 @@
         let currentTaskQuote = '';
         let editingTaskId = null;
 
-        // ===========================================
-        // 🔥 Firebase Functions
-        // ===========================================
-
+        // Firebase Functions
         async function fetchQuotations() {
             try {
-                console.log('🔥 Loading quotations from Firebase...');
+                console.log('Loading quotations...');
                 showLoading();
                 
                 const quotationsRef = collection(db, QUOTATIONS_COLLECTION);
@@ -802,18 +882,16 @@
                 renderTable();
                 updateSummary();
                 
-                console.log('✅ Loaded', quotations.length, 'quotations from Firebase');
+                console.log('Loaded', quotations.length, 'quotations');
                 
             } catch (error) {
-                console.error('❌ Error fetching quotations:', error);
-                showError('ไม่สามารถเชื่อมต่อ Firebase ได้ กรุณาตรวจสอบ Config');
+                console.error('Error fetching quotations:', error);
+                showError('ไม่สามารถโหลดข้อมูลได้');
             }
         }
 
         async function createQuotation(data) {
             try {
-                console.log('🔥 Creating quotation in Firebase:', data.quoteNo);
-                
                 const docRef = await addDoc(collection(db, QUOTATIONS_COLLECTION), {
                     ...data,
                     createdAt: new Date(),
@@ -827,22 +905,20 @@
                 quotations.push(newQuotation);
                 tasks[data.quoteNo] = [];
                 
-                console.log('✅ Created quotation with ID:', docRef.id);
+                console.log('Created quotation:', docRef.id);
                 return newQuotation;
                 
             } catch (error) {
-                console.error('❌ Error creating quotation:', error);
-                throw new Error('ไม่สามารถเพิ่มใบเสนอราคาได้: ' + error.message);
+                console.error('Error creating quotation:', error);
+                throw new Error('ไม่สามารถเพิ่มใบเสนอราคาได้');
             }
         }
 
         async function updateQuotation(quoteNo, data) {
             try {
-                console.log('🔥 Updating quotation in Firebase:', quoteNo);
-                
                 const quotation = quotations.find(q => q.quoteNo === quoteNo);
                 if (!quotation) {
-                    throw new Error('ไม่พบใบเสนอราคาที่ต้องการแก้ไข');
+                    throw new Error('ไม่พบใบเสนอราคา');
                 }
                 
                 const docRef = doc(db, QUOTATIONS_COLLECTION, quotation.id);
@@ -856,22 +932,19 @@
                     quotations[index] = { ...quotations[index], ...data };
                 }
                 
-                console.log('✅ Updated quotation:', quoteNo);
                 return data;
                 
             } catch (error) {
-                console.error('❌ Error updating quotation:', error);
-                throw new Error('ไม่สามารถแก้ไขใบเสนอราคาได้: ' + error.message);
+                console.error('Error updating quotation:', error);
+                throw new Error('ไม่สามารถแก้ไขได้');
             }
         }
 
         async function deleteQuotation(quoteNo) {
             try {
-                console.log('🔥 Deleting quotation from Firebase:', quoteNo);
-                
                 const quotation = quotations.find(q => q.quoteNo === quoteNo);
                 if (!quotation) {
-                    throw new Error('ไม่พบใบเสนอราคาที่ต้องการลบ');
+                    throw new Error('ไม่พบใบเสนอราคา');
                 }
                 
                 await deleteDoc(doc(db, QUOTATIONS_COLLECTION, quotation.id));
@@ -880,23 +953,17 @@
                 quotations = quotations.filter(q => q.quoteNo !== quoteNo);
                 delete tasks[quoteNo];
                 
-                console.log('✅ Deleted quotation:', quoteNo);
                 return true;
                 
             } catch (error) {
-                console.error('❌ Error deleting quotation:', error);
-                throw new Error('ไม่สามารถลบใบเสนอราคาได้: ' + error.message);
+                console.error('Error deleting quotation:', error);
+                throw new Error('ไม่สามารถลบได้');
             }
         }
 
-        // ===========================================
-        // 🔥 Firebase Tasks Functions
-        // ===========================================
-
+        // Task Functions
         async function loadAllTasks() {
             try {
-                console.log('🔥 Loading all tasks from Firebase...');
-                
                 const tasksRef = collection(db, TASKS_COLLECTION);
                 const querySnapshot = await getDocs(tasksRef);
                 
@@ -916,17 +983,13 @@
                     });
                 });
                 
-                console.log('✅ Loaded tasks for', Object.keys(tasks).length, 'quotations');
-                
             } catch (error) {
-                console.error('❌ Error loading tasks:', error);
+                console.error('Error loading tasks:', error);
             }
         }
 
         async function saveTaskToFirebase(quoteNo, taskData) {
             try {
-                console.log('🔥 Saving task to Firebase:', taskData.name);
-                
                 const docRef = await addDoc(collection(db, TASKS_COLLECTION), {
                     ...taskData,
                     quoteNo: quoteNo,
@@ -935,52 +998,40 @@
                 });
                 
                 taskData.id = docRef.id;
-                
-                console.log('✅ Saved task with ID:', docRef.id);
                 return docRef.id;
                 
             } catch (error) {
-                console.error('❌ Error saving task:', error);
+                console.error('Error saving task:', error);
                 throw error;
             }
         }
 
         async function updateTaskInFirebase(taskId, taskData) {
             try {
-                console.log('🔥 Updating task in Firebase:', taskId);
-                
                 const docRef = doc(db, TASKS_COLLECTION, taskId);
                 await updateDoc(docRef, {
                     ...taskData,
                     updatedAt: new Date()
                 });
                 
-                console.log('✅ Updated task:', taskId);
-                
             } catch (error) {
-                console.error('❌ Error updating task:', error);
+                console.error('Error updating task:', error);
                 throw error;
             }
         }
 
         async function deleteTaskFromFirebase(taskId) {
             try {
-                console.log('🔥 Deleting task from Firebase:', taskId);
-                
                 await deleteDoc(doc(db, TASKS_COLLECTION, taskId));
                 
-                console.log('✅ Deleted task:', taskId);
-                
             } catch (error) {
-                console.error('❌ Error deleting task:', error);
+                console.error('Error deleting task:', error);
                 throw error;
             }
         }
 
         async function deleteAllTasksForQuotation(quoteNo) {
             try {
-                console.log('🔥 Deleting all tasks for quotation:', quoteNo);
-                
                 const tasksRef = collection(db, TASKS_COLLECTION);
                 const q = query(tasksRef, where('quoteNo', '==', quoteNo));
                 const querySnapshot = await getDocs(q);
@@ -992,24 +1043,19 @@
                 
                 await Promise.all(deletePromises);
                 
-                console.log('✅ Deleted', deletePromises.length, 'tasks for quotation:', quoteNo);
-                
             } catch (error) {
-                console.error('❌ Error deleting tasks:', error);
+                console.error('Error deleting tasks:', error);
             }
         }
 
-        // ===========================================
         // UI Functions
-        // ===========================================
-        
         function showLoading() {
             const tbody = document.getElementById('quotationTable');
             tbody.innerHTML = `
                 <tr>
                     <td colspan="8" class="loading">
                         <div class="spinner"></div>
-                        <p>กำลังโหลดข้อมูลจาก Firebase...</p>
+                        <p>กำลังโหลดข้อมูล...</p>
                     </td>
                 </tr>
             `;
@@ -1022,7 +1068,7 @@
                 tbody.innerHTML = `
                     <tr>
                         <td colspan="8" class="error">
-                            ไม่มีข้อมูลใบเสนอราคา
+                            ไม่มีข้อมูล
                         </td>
                     </tr>
                 `;
@@ -1039,25 +1085,25 @@
                 return `
                     <tr>
                         <td>
-                            <div class="quote-cell">
-                                <div class="progress-circle ${progressClass}">${progress}%</div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div class="progress-simple ${progressClass}">${progress}%</div>
                                 <span class="quote-no">${quote.quoteNo}</span>
                             </div>
                         </td>
                         <td>${formatDate(quote.createDate)}</td>
-                        <td>${quote.customerName}</td>
-                        <td class="progress-column">
-                            <div class="table-progress-bar">
-                                <div class="table-progress-fill" style="width: ${progress}%"></div>
+                        <td style="max-width: 200px; word-wrap: break-word;">${quote.customerName}</td>
+                        <td>
+                            <div class="progress-bar-simple">
+                                <div class="progress-fill-simple" style="width: ${progress}%"></div>
                             </div>
-                            <div class="progress-text">${completedTasks}/${totalTasks} งาน (${progress}%)</div>
+                            <div class="progress-text-simple">${completedTasks}/${totalTasks} งาน</div>
                         </td>
                         <td><span class="status-badge status-${quote.status}">${getStatusText(quote.status)}</span></td>
                         <td>${quote.responsible}</td>
-                        <td>${quote.note || '-'}</td>
+                        <td style="max-width: 200px; word-wrap: break-word; white-space: normal;">${quote.note || '-'}</td>
                         <td>
                             <div class="actions">
-                                <button class="btn btn-secondary btn-small" onclick="editQuotation('${quote.quoteNo}')">แก้ไข</button>
+                                <button class="btn btn-primary btn-small" onclick="editQuotation('${quote.quoteNo}')">แก้ไข</button>
                                 <button class="btn btn-warning btn-small" onclick="openTaskModal('${quote.quoteNo}')">งาน</button>
                                 <button class="btn btn-danger btn-small" onclick="confirmDelete('${quote.quoteNo}')">ลบ</button>
                             </div>
@@ -1071,8 +1117,8 @@
             const counts = {
                 pending: 0,
                 approved: 0,
-                rejected: 0,
-                expired: 0
+                completed: 0,
+                waiting_feedback: 0
             };
             
             quotations.forEach(quote => {
@@ -1083,8 +1129,8 @@
             
             document.getElementById('pendingCount').textContent = counts.pending;
             document.getElementById('approvedCount').textContent = counts.approved;
-            document.getElementById('rejectedCount').textContent = counts.rejected;
-            document.getElementById('expiredCount').textContent = counts.expired;
+            document.getElementById('completedCount').textContent = counts.completed;
+            document.getElementById('waitingFeedbackCount').textContent = counts.waiting_feedback;
         }
 
         function showError(message) {
@@ -1099,10 +1145,7 @@
             `;
         }
 
-        // ===========================================
         // Quotation Management
-        // ===========================================
-        
         window.openAddModal = function() {
             const year = new Date().getFullYear();
             const existing = quotations.filter(q => q.quoteNo.includes(year.toString()));
@@ -1126,7 +1169,7 @@
         window.addQuotation = async function() {
             const form = document.getElementById('addForm');
             if (!form.checkValidity()) {
-                alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+                alert('กรุณากรอกข้อมูลให้ครบ');
                 return;
             }
             
@@ -1145,7 +1188,7 @@
                 filteredQuotations = [...quotations];
                 renderTable();
                 updateSummary();
-                alert('เพิ่มใบเสนอราคาสำเร็จ!');
+                alert('เพิ่มสำเร็จ!');
             } catch (error) {
                 alert(error.message);
             }
@@ -1157,7 +1200,7 @@
             
             currentEditingQuote = quoteNo;
             
-            document.getElementById('editModalTitle').textContent = `แก้ไขใบเสนอราคา - ${quoteNo}`;
+            document.getElementById('editModalTitle').textContent = `แก้ไข - ${quoteNo}`;
             document.getElementById('editQuoteNo').value = quote.quoteNo;
             document.getElementById('editCreateDate').value = quote.createDate;
             document.getElementById('editCustomerName').value = quote.customerName;
@@ -1176,7 +1219,7 @@
         window.saveQuotation = async function() {
             const form = document.getElementById('editForm');
             if (!form.checkValidity()) {
-                alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+                alert('กรุณากรอกข้อมูลให้ครบ');
                 return;
             }
             
@@ -1194,30 +1237,27 @@
                 filteredQuotations = [...quotations];
                 renderTable();
                 updateSummary();
-                alert('แก้ไขใบเสนอราคาสำเร็จ!');
+                alert('แก้ไขสำเร็จ!');
             } catch (error) {
                 alert(error.message);
             }
         }
 
         window.confirmDelete = async function(quoteNo) {
-            if (!confirm(`คุณต้องการลบใบเสนอราคา ${quoteNo} หรือไม่?\n\n⚠️ การลบจะไม่สามารถกู้คืนได้ และจะลบงานทั้งหมดในใบเสนอราคานี้ด้วย`)) return;
+            if (!confirm(`ลบใบเสนอราคา ${quoteNo} หรือไม่?`)) return;
             
             try {
                 await deleteQuotation(quoteNo);
                 filteredQuotations = [...quotations];
                 renderTable();
                 updateSummary();
-                alert('ลบใบเสนอราคาสำเร็จ!');
+                alert('ลบสำเร็จ!');
             } catch (error) {
                 alert(error.message);
             }
         }
 
-        // ===========================================
         // Task Management
-        // ===========================================
-        
         window.openTaskModal = function(quoteNo) {
             currentTaskQuote = quoteNo;
             document.getElementById('taskModalTitle').textContent = `จัดการงาน - ${quoteNo}`;
@@ -1239,18 +1279,18 @@
             const quoteTasks = tasks[currentTaskQuote] || [];
             
             if (quoteTasks.length === 0) {
-                taskList.innerHTML = '<li style="text-align: center; padding: 20px; color: #6b7280;">ยังไม่มีงาน คลิก "เพิ่มงาน" เพื่อเริ่มต้น</li>';
+                taskList.innerHTML = '<li style="text-align: center; padding: 20px; color: #7f8c8d;">ยังไม่มีงาน</li>';
                 return;
             }
             
             taskList.innerHTML = quoteTasks.map(task => `
-                <li class="task-item" ${editingTaskId === task.id ? 'style="border: 2px solid #3b82f6; background: #f0f9ff;"' : ''}>
+                <li class="task-item" ${editingTaskId === task.id ? 'style="border: 2px solid #3498db;"' : ''}>
                     <input type="checkbox" class="task-checkbox" ${task.status === 'done' ? 'checked' : ''} 
                            onchange="toggleTask('${task.id}')">
                     <div class="task-details">
                         <div class="task-name">${task.name}</div>
                         <select class="task-status-select" onchange="updateTaskStatus('${task.id}', this.value)">
-                            <option value="todo" ${task.status === 'todo' ? 'selected' : ''}>รอดำเนินการ</option>
+                            <option value="todo" ${task.status === 'todo' ? 'selected' : ''}>รอทำ</option>
                             <option value="inprogress" ${task.status === 'inprogress' ? 'selected' : ''}>กำลังทำ</option>
                             <option value="done" ${task.status === 'done' ? 'selected' : ''}>เสร็จแล้ว</option>
                         </select>
@@ -1312,7 +1352,7 @@
                 renderTable();
                 
             } catch (error) {
-                alert('เกิดข้อผิดพลาดในการบันทึกงาน: ' + error.message);
+                alert('เกิดข้อผิดพลาด: ' + error.message);
             }
         }
 
@@ -1324,8 +1364,8 @@
             document.getElementById('taskName').value = task.name;
             document.getElementById('taskStatus').value = task.status;
             
-            const addBtn = document.querySelector('.task-form .btn-primary');
-            addBtn.textContent = 'อัปเดตงาน';
+            const addBtn = document.querySelector('.task-form .btn-success');
+            addBtn.textContent = 'อัปเดต';
             
             const cancelBtn = document.getElementById('cancelEditBtn');
             cancelBtn.style.display = 'block';
@@ -1343,8 +1383,8 @@
             document.getElementById('taskName').value = '';
             document.getElementById('taskStatus').value = 'todo';
             
-            const addBtn = document.querySelector('.task-form .btn-primary');
-            addBtn.textContent = 'เพิ่มงาน';
+            const addBtn = document.querySelector('.task-form .btn-success');
+            addBtn.textContent = 'เพิ่ม';
             
             const cancelBtn = document.getElementById('cancelEditBtn');
             cancelBtn.style.display = 'none';
@@ -1371,13 +1411,13 @@
                     renderTable();
                     
                 } catch (error) {
-                    alert('เกิดข้อผิดพลาดในการอัปเดตสถานะงาน: ' + error.message);
+                    alert('เกิดข้อผิดพลาด: ' + error.message);
                 }
             }
         }
 
         window.deleteTask = async function(taskId) {
-            if (!confirm('คุณต้องการลบงานนี้หรือไม่?\n\n⚠️ การลบจะไม่สามารถกู้คืนได้')) return;
+            if (!confirm('ลบงานนี้หรือไม่?')) return;
             
             try {
                 await deleteTaskFromFirebase(taskId);
@@ -1389,7 +1429,7 @@
                 renderTable();
                 
             } catch (error) {
-                alert('เกิดข้อผิดพลาดในการลบงาน: ' + error.message);
+                alert('เกิดข้อผิดพลาด: ' + error.message);
             }
         }
 
@@ -1404,10 +1444,7 @@
             document.getElementById('progressPercent').textContent = percentage;
         }
 
-        // ===========================================
         // Filter & Search
-        // ===========================================
-        
         window.filterQuotations = function() {
             const statusFilter = document.getElementById('statusFilter').value;
             const searchInput = document.getElementById('searchInput').value.toLowerCase();
@@ -1425,10 +1462,7 @@
             renderTable();
         }
 
-        // ===========================================
         // Utility Functions
-        // ===========================================
-        
         function calculateProgress(quoteNo) {
             const quoteTasks = tasks[quoteNo] || [];
             if (quoteTasks.length === 0) return 0;
@@ -1459,16 +1493,13 @@
             const statusMap = {
                 pending: 'รอดำเนินการ',
                 approved: 'อนุมัติแล้ว',
-                rejected: 'ไม่อนุมัติ',
-                expired: 'หมดอายุ'
+                completed: 'จบงานแล้ว',
+                waiting_feedback: 'เสร็จแล้ว(รอfeedback)'
             };
             return statusMap[status] || status;
         }
 
-        // ===========================================
         // Event Listeners
-        // ===========================================
-        
         window.onclick = function(event) {
             const modals = ['addModal', 'editModal', 'taskModal'];
             modals.forEach(modalId => {
@@ -1483,156 +1514,18 @@
             fetchQuotations();
         }
 
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(event) {
-            // Escape key closes modals
-            if (event.key === 'Escape') {
-                const modals = ['addModal', 'editModal', 'taskModal'];
-                modals.forEach(modalId => {
-                    const modal = document.getElementById(modalId);
-                    if (modal.style.display === 'block') {
-                        modal.style.display = 'none';
-                    }
-                });
-            }
-            
-            // Ctrl + N opens add modal
-            if (event.ctrlKey && event.key === 'n') {
-                event.preventDefault();
-                openAddModal();
-            }
-        });
-
-        // ===========================================
-        // 🔥 Initialize Application
-        // ===========================================
-        
+        // Initialize Application
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Starting Quotation Management System...');
-            console.log('🔥 Initializing Firebase connection...');
+            console.log('Starting system...');
             
-            // Check if Firebase config is set
             if (firebaseConfig.apiKey.includes('YOUR_API_KEY')) {
-                showError('⚠️ กรุณาตั้งค่า Firebase Config ให้ถูกต้อง');
+                showError('กรุณาตั้งค่า Firebase Config');
                 return;
             }
             
-            // Load data from Firebase
             fetchQuotations();
-            
-            console.log('✅ System initialized successfully');
         });
 
-        // ===========================================
-        // 🔥 Real-time Updates (Optional)
-        // ===========================================
-        
-        function setupRealtimeListeners() {
-            console.log('🔥 Setting up real-time listeners...');
-            
-            // Listen for quotations changes
-            const quotationsRef = collection(db, QUOTATIONS_COLLECTION);
-            const unsubscribeQuotations = onSnapshot(quotationsRef, (snapshot) => {
-                console.log('🔥 Real-time update detected');
-                fetchQuotations(); // Refresh data
-            });
-            
-            // Listen for tasks changes
-            const tasksRef = collection(db, TASKS_COLLECTION);
-            const unsubscribeTasks = onSnapshot(tasksRef, (snapshot) => {
-                console.log('🔥 Tasks updated in real-time');
-                loadAllTasks().then(() => {
-                    renderTable();
-                    if (currentTaskQuote) {
-                        renderTasks();
-                        updateTaskProgress();
-                    }
-                });
-            });
-            
-            return { unsubscribeQuotations, unsubscribeTasks };
-        }
-
-        // Uncomment to enable real-time updates
-        // setupRealtimeListeners();
-
     </script>
-
-    <!-- 
-    ===================================================
-    🔥 Firebase Setup Instructions
-    ===================================================
-    
-    1. สร้าง Firebase Project:
-       - ไปที่ https://console.firebase.google.com
-       - คลิก "Create a project" 
-       - ตั้งชื่อโปรเจ็ค เช่น "quotation-system"
-       - เปิดใช้ Google Analytics (ถ้าต้องการ)
-    
-    2. เปิดใช้ Firestore Database:
-       - ไปที่เมนู "Firestore Database"
-       - คลิก "Create database"
-       - เลือก "Start in production mode"
-       - เลือก location: asia-southeast1 (ใกล้ประเทศไทย)
-    
-    3. สร้าง Web App:
-       - ไปที่ Project Settings (ไอคอนเฟือง)
-       - คลิก "Add app" เลือก Web (</>)
-       - ตั้งชื่อ "Quotation Web App"
-       - คัดลอก Firebase config
-    
-    4. แทนที่ Config ในโค้ด:
-       - หาบรรทัด firebaseConfig ในโค้ดข้างบน
-       - แทนที่ YOUR_API_KEY, your-project-id เป็นของจริง
-    
-    5. ตั้งค่า Security Rules:
-       - ไปที่ Firestore > Rules
-       - แทนที่ด้วยโค้ดนี้:
-       
-       rules_version = '2';
-       service cloud.firestore {
-         match /databases/{database}/documents {
-           match /{document=**} {
-             allow read, write: if true;
-           }
-         }
-       }
-    
-    6. บันทึกและเผยแพร่ Rules
-    
-    7. Collections ที่จะสร้างอัตโนมัติ:
-       - quotations (ใบเสนอราคา)
-       - tasks (งานในแต่ละใบเสนอราคา)
-    
-    8. ทดสอบ:
-       - เปิดไฟล์ HTML ในเบราว์เซอร์
-       - ลองเพิ่มใบเสนอราคาใหม่
-       - ตรวจสอบใน Firebase Console ว่าข้อมูลถูกบันทึก
-    
-    ===================================================
-    
-    🎯 คุณสมบัติที่อัปเดต:
-    - ✅ เอาฟิลด์ "วันหมดอายุ" ออกแล้ว
-    - ✅ เพิ่ม Progress Bar แสดงเปอร์เซ็นต์ความคืบหน้า Tasks
-    - ✅ แสดงจำนวนงานที่เสร็จ/ทั้งหมด
-    - ✅ Progress Bar มีสีที่เปลี่ยนตามเปอร์เซ็นต์
-    - ✅ ยังคงมี Progress Circle เพื่อให้เห็นภาพรวมได้ง่าย
-    - ✅ การทำงานทั้งหมดเหมือนเดิม แค่เปลี่ยน UI
-    
-    📊 Progress Bar Features:
-    - สีเปลี่ยนจากแดง (0%) ไปเขียว (100%)
-    - แสดงข้อความ "X/Y งาน (Z%)"
-    - อัปเดตแบบ Real-time เมื่อเปลี่ยนสถานะงาน
-    - Responsive บนมือถือ
-    
-    📱 การใช้งาน:
-    - บันทึกเป็นไฟล์ .html
-    - ตั้งค่า Firebase Config
-    - เปิดด้วย Web Browser
-    - เริ่มเพิ่มใบเสนอราคาและงานได้เลย!
-    
-    ===================================================
-    -->
-
 </body>
 </html>
