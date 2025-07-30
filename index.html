@@ -607,7 +607,7 @@
                 <div class="number" id="completedCount">-</div>
             </div>
             <div class="summary-card waiting_feedback">
-                <h3>เสร็จแล้ว(รอfeedback)</h3>
+                <h3>เสร็จแล้ว</h3>
                 <div class="number" id="waitingFeedbackCount">-</div>
             </div>
             <div class="summary-card approved">
@@ -632,7 +632,7 @@
                     <option value="pending">รอดำเนินการ</option>
                     <option value="approved">อนุมัติแล้ว</option>
                     <option value="completed">จบงานแล้ว</option>
-                    <option value="waiting_feedback">เสร็จแล้ว(รอfeedback)</option>
+                    <option value="waiting_feedback">เสร็จแล้ว</option>
                 </select>
                 
                 <input type="text" id="searchInput" placeholder="ค้นหา..." oninput="filterQuotations()">
@@ -700,7 +700,7 @@
                             <option value="pending">รอดำเนินการ</option>
                             <option value="approved">อนุมัติแล้ว</option>
                             <option value="completed">จบงานแล้ว</option>
-                            <option value="waiting_feedback">เสร็จแล้ว(รอfeedback)</option>
+                            <option value="waiting_feedback">เสร็จแล้ว</option>
                         </select>
                     </div>
                     
@@ -752,7 +752,7 @@
                             <option value="pending">รอดำเนินการ</option>
                             <option value="approved">อนุมัติแล้ว</option>
                             <option value="completed">จบงานแล้ว</option>
-                            <option value="waiting_feedback">เสร็จแล้ว(รอfeedback)</option>
+                            <option value="waiting_feedback">เสร็จแล้ว</option>
                         </select>
                     </div>
                     
@@ -1494,7 +1494,7 @@
                 pending: 'รอดำเนินการ',
                 approved: 'อนุมัติแล้ว',
                 completed: 'จบงานแล้ว',
-                waiting_feedback: 'เสร็จแล้ว(รอfeedback)'
+                waiting_feedback: 'เสร็จแล้ว'
             };
             return statusMap[status] || status;
         }
