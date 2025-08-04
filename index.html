@@ -304,7 +304,7 @@
             margin: 5% auto;
             border-radius: 8px;
             width: 90%;
-            max-width: 500px;
+            max-width: 700px;
             max-height: 85vh;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
             display: flex;
@@ -400,10 +400,30 @@
             background: #f8f9fa;
             border-radius: 5px;
             flex-shrink: 0;
+            align-items: end;
         }
 
-        .task-form input {
-            flex: 1;
+        .task-form input[type="text"]:nth-child(2) {
+            min-width: 120px;
+        }
+
+        .task-form select {
+            min-width: 100px;
+        }
+
+        .task-form input,
+        .task-form select {
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .task-form label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 5px;
+            display: block;
         }
 
         .task-list {
@@ -451,6 +471,12 @@
 
         .task-name {
             font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .task-assignee {
+            font-size: 11px;
+            color: #666;
             margin-bottom: 5px;
         }
 
@@ -559,6 +585,11 @@
             .task-list {
                 max-height: 30vh;
             }
+
+            .task-form {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -623,7 +654,7 @@
         <!-- Controls -->
         <div class="controls">
             <button class="btn btn-success" onclick="openAddModal()">
-                + เพิ่มใบเสนอราคา
+                + เพิ่มใบงาน
             </button>
             
             <div class="search-box">
@@ -674,13 +705,13 @@
     <div id="addModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>เพิ่มใบเสนอราคาใหม่</h2>
+                <h2>เพิ่มใบงานใหม่</h2>
                 <button class="close-btn" onclick="closeAddModal()">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="addForm">
                     <div class="form-group">
-                        <label>เลขที่ใบเสนอราคา</label>
+                        <label>เลขที่ใบงาน</label>
                         <input type="text" id="addQuoteNo" required>
                     </div>
                     
@@ -793,15 +824,25 @@
 
                 <!-- Add Task Form -->
                 <div class="task-form">
-                    <input type="text" id="taskName" placeholder="ชื่องาน...">
-                    <select id="taskStatus">
-                        <option value="todo">รอทำ</option>
-                        <option value="inprogress">กำลังทำ</option>
-                        <option value="done">เสร็จแล้ว</option>
-                    </select>
+                    <div style="flex: 1; min-width: 0;">
+                        <label>ชื่องาน</label>
+                        <input type="text" id="taskName" placeholder="ชื่องาน..." style="width: 100%;">
+                    </div>
+                    <div style="flex-shrink: 0;">
+                        <label>ผู้ทำ</label>
+                        <input type="text" id="taskAssignee" placeholder="ผู้ทำ..." style="width: 120px;">
+                    </div>
+                    <div style="flex-shrink: 0;">
+                        <label>สถานะ</label>
+                        <select id="taskStatus" style="width: 100px;">
+                            <option value="todo">รอทำ</option>
+                            <option value="inprogress">กำลังทำ</option>
+                            <option value="done">เสร็จแล้ว</option>
+                        </select>
+                    </div>
                     <button type="button" class="btn btn-success btn-small" onclick="addTask()">เพิ่ม</button>
                     <button type="button" class="btn btn-danger btn-small" id="cancelEditBtn" onclick="cancelEdit()" style="display: none;">ยกเลิก</button>
-                </div>
+                 </div>
 
                 <!-- Task List -->
                 <ul class="task-list" id="taskList">
@@ -910,7 +951,7 @@
                 
             } catch (error) {
                 console.error('Error creating quotation:', error);
-                throw new Error('ไม่สามารถเพิ่มใบเสนอราคาได้');
+                throw new Error('ไม่สามารถเพิ่มใบงานได้');
             }
         }
 
@@ -1105,7 +1146,6 @@
                             <div class="actions">
                                 <button class="btn btn-primary btn-small" onclick="editQuotation('${quote.quoteNo}')">แก้ไข</button>
                                 <button class="btn btn-warning btn-small" onclick="openTaskModal('${quote.quoteNo}')">งาน</button>
-                                <button class="btn btn-danger btn-small" onclick="confirmDelete('${quote.quoteNo}')">ลบ</button>
                             </div>
                         </td>
                     </tr>
@@ -1289,6 +1329,7 @@
                            onchange="toggleTask('${task.id}')">
                     <div class="task-details">
                         <div class="task-name">${task.name}</div>
+                        ${task.assignee ? `<div class="task-assignee">ผู้ทำ: ${task.assignee}</div>` : ''}
                         <select class="task-status-select" onchange="updateTaskStatus('${task.id}', this.value)">
                             <option value="todo" ${task.status === 'todo' ? 'selected' : ''}>รอทำ</option>
                             <option value="inprogress" ${task.status === 'inprogress' ? 'selected' : ''}>กำลังทำ</option>
@@ -1305,6 +1346,7 @@
 
         window.addTask = async function() {
             const taskName = document.getElementById('taskName').value.trim();
+            const taskAssignee = document.getElementById('taskAssignee').value.trim();
             const taskStatus = document.getElementById('taskStatus').value;
             
             if (!taskName) {
@@ -1323,11 +1365,13 @@
                         const updatedTask = {
                             ...tasks[currentTaskQuote][taskIndex],
                             name: taskName,
+                            assignee: taskAssignee,
                             status: taskStatus
                         };
                         
                         await updateTaskInFirebase(editingTaskId, {
                             name: taskName,
+                            assignee: taskAssignee,
                             status: taskStatus
                         });
                         
@@ -1337,6 +1381,7 @@
                 } else {
                     const newTask = {
                         name: taskName,
+                        assignee: taskAssignee,
                         status: taskStatus
                     };
                     
@@ -1362,6 +1407,7 @@
             
             editingTaskId = taskId;
             document.getElementById('taskName').value = task.name;
+            document.getElementById('taskAssignee').value = task.assignee || '';
             document.getElementById('taskStatus').value = task.status;
             
             const addBtn = document.querySelector('.task-form .btn-success');
@@ -1381,6 +1427,7 @@
 
         function resetTaskForm() {
             document.getElementById('taskName').value = '';
+            document.getElementById('taskAssignee').value = '';
             document.getElementById('taskStatus').value = 'todo';
             
             const addBtn = document.querySelector('.task-form .btn-success');
