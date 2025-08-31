@@ -839,6 +839,12 @@
                             <option value="inprogress">กำลังทำ</option>
                             <option value="done">เสร็จแล้ว</option>
                         </select>
+                        
+                    </div>
+
+                    <div style="flex-shrink: 0;">
+                        <label>Manday</label>
+                        <input type="number" id="taskManday" placeholder="จำนวนวัน..." style="width: 80px;" min="0.25" step="0.25">
                     </div>
                     <button type="button" class="btn btn-success btn-small" onclick="addTask()">เพิ่ม</button>
                     <button type="button" class="btn btn-danger btn-small" id="cancelEditBtn" onclick="cancelEdit()" style="display: none;">ยกเลิก</button>
@@ -1330,6 +1336,7 @@
                     <div class="task-details">
                         <div class="task-name">${task.name}</div>
                         ${task.assignee ? `<div class="task-assignee">ผู้ทำ: ${task.assignee}</div>` : ''}
+                        ${task.manday ? `<div class="task-assignee">manday: ${task.manday}</div>` : ''}
                         <select class="task-status-select" onchange="updateTaskStatus('${task.id}', this.value)">
                             <option value="todo" ${task.status === 'todo' ? 'selected' : ''}>รอทำ</option>
                             <option value="inprogress" ${task.status === 'inprogress' ? 'selected' : ''}>กำลังทำ</option>
@@ -1348,6 +1355,7 @@
             const taskName = document.getElementById('taskName').value.trim();
             const taskAssignee = document.getElementById('taskAssignee').value.trim();
             const taskStatus = document.getElementById('taskStatus').value;
+            const taskManday = document.getElementById('taskManday').value;
             
             if (!taskName) {
                 alert('กรุณาใส่ชื่องาน');
@@ -1366,13 +1374,15 @@
                             ...tasks[currentTaskQuote][taskIndex],
                             name: taskName,
                             assignee: taskAssignee,
-                            status: taskStatus
+                            status: taskStatus,
+                            manday: taskManday
                         };
                         
                         await updateTaskInFirebase(editingTaskId, {
                             name: taskName,
                             assignee: taskAssignee,
-                            status: taskStatus
+                            status: taskStatus,
+                            manday: taskManday
                         });
                         
                         tasks[currentTaskQuote][taskIndex] = updatedTask;
@@ -1382,7 +1392,8 @@
                     const newTask = {
                         name: taskName,
                         assignee: taskAssignee,
-                        status: taskStatus
+                        status: taskStatus,
+                        manday: taskManday
                     };
                     
                     const firebaseId = await saveTaskToFirebase(currentTaskQuote, newTask);
@@ -1409,6 +1420,7 @@
             document.getElementById('taskName').value = task.name;
             document.getElementById('taskAssignee').value = task.assignee || '';
             document.getElementById('taskStatus').value = task.status;
+            document.getElementById('taskManday').value = task.manday;
             
             const addBtn = document.querySelector('.task-form .btn-success');
             addBtn.textContent = 'อัปเดต';
@@ -1429,6 +1441,7 @@
             document.getElementById('taskName').value = '';
             document.getElementById('taskAssignee').value = '';
             document.getElementById('taskStatus').value = 'todo';
+            document.getElementById('taskManday').value = '';
             
             const addBtn = document.querySelector('.task-form .btn-success');
             addBtn.textContent = 'เพิ่ม';
