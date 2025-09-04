@@ -241,7 +241,7 @@
             color: white;
         }
 
-        .progress-0 { background: #e74c3c; }
+        .progress-0 { background: #95a5a6; }
         .progress-25 { background: #f39c12; }
         .progress-50 { background: #f1c40f; }
         .progress-75 { background: #2ecc71; }
@@ -393,37 +393,66 @@
         }
 
         .task-form {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            padding: 15px;
             background: #f8f9fa;
             border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
             flex-shrink: 0;
+        }
+
+        .task-form-row {
+            display: flex;
+            gap: 10px;
             align-items: end;
+            margin-bottom: 15px;
         }
 
-        .task-form input[type="text"]:nth-child(2) {
-            min-width: 120px;
+        .task-form-row:last-child {
+            margin-bottom: 0;
         }
 
-        .task-form select {
-            min-width: 100px;
+        .task-form-group {
+            display: flex;
+            flex-direction: column;
         }
 
-        .task-form input,
-        .task-form select {
+        .task-form-group label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .task-form-group input,
+        .task-form-group select {
             padding: 8px 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 14px;
         }
 
-        .task-form label {
-            font-size: 11px;
-            color: #666;
-            margin-bottom: 5px;
-            display: block;
+        .task-form-group.flex-1 {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .task-form-group.fixed-width {
+            min-width: 100px;
+        }
+
+        .assignee-row {
+            display: flex;
+            gap: 10px;
+            align-items: end;
+            margin-bottom: 10px;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #e1e8ed;
+        }
+
+        .assignee-row:last-child {
+            margin-bottom: 0;
         }
 
         .task-list {
@@ -478,6 +507,16 @@
             font-size: 11px;
             color: #666;
             margin-bottom: 5px;
+        }
+
+        .task-assignee-item {
+            display: inline-block;
+            background: #e3f2fd;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-right: 8px;
+            margin-bottom: 4px;
+            font-size: 10px;
         }
 
         .task-status-select {
@@ -586,9 +625,14 @@
                 max-height: 30vh;
             }
 
-            .task-form {
-                grid-template-columns: 1fr;
-                gap: 10px;
+            .task-form-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .assignee-row {
+                flex-direction: column;
+                align-items: stretch;
             }
         }
 
@@ -824,31 +868,48 @@
 
                 <!-- Add Task Form -->
                 <div class="task-form">
-                    <div style="flex: 1; min-width: 0;">
-                        <label>ชื่องาน</label>
-                        <input type="text" id="taskName" placeholder="ชื่องาน..." style="width: 100%;">
-                    </div>
-                    <div style="flex-shrink: 0;">
-                        <label>ผู้ทำ</label>
-                        <input type="text" id="taskAssignee" placeholder="ผู้ทำ..." style="width: 120px;">
-                    </div>
-                    <div style="flex-shrink: 0;">
-                        <label>สถานะ</label>
-                        <select id="taskStatus" style="width: 100px;">
-                            <option value="todo">รอทำ</option>
-                            <option value="inprogress">กำลังทำ</option>
-                            <option value="done">เสร็จแล้ว</option>
-                        </select>
-                        
+                    <!-- แถวแรก: ชื่องาน + สถานะ + ปุ่มจัดการ -->
+                    <div class="task-form-row">
+                        <div class="task-form-group flex-1">
+                            <label>ชื่องาน</label>
+                            <input type="text" id="taskName" placeholder="ชื่องาน...">
+                        </div>
+                        <div class="task-form-group fixed-width">
+                            <label>สถานะ</label>
+                            <select id="taskStatus">
+                                <option value="todo">รอทำ</option>
+                                <option value="inprogress">กำลังทำ</option>
+                                <option value="done">เสร็จแล้ว</option>
+                            </select>
+                        </div>
+                        <div class="task-form-group">
+                            <label>&nbsp;</label>
+                            <div style="display: flex; gap: 5px;">
+                                <button type="button" class="btn btn-success btn-small" onclick="addTask()">เพิ่ม</button>
+                                <button type="button" class="btn btn-danger btn-small" id="cancelEditBtn" onclick="cancelEdit()" style="display: none;">ยกเลิก</button>
+                            </div>
+                        </div>
                     </div>
 
-                    <div style="flex-shrink: 0;">
-                        <label>Manday</label>
-                        <input type="number" id="taskManday" placeholder="จำนวนวัน..." style="width: 80px;" min="0.25" step="0.25">
+                    <!-- แถวที่สอง: ผู้ทำและ manday -->
+                    <div id="assigneeContainer">
+                        <!-- แถวผู้ทำคนแรก -->
+                        <div class="assignee-row">
+                            <div class="task-form-group flex-1">
+                                <label>ผู้ทำ</label>
+                                <input type="text" class="assignee-input" placeholder="ชื่อผู้ทำ...">
+                            </div>
+                            <div class="task-form-group fixed-width">
+                                <label>Manday</label>
+                                <input type="number" class="manday-input" placeholder="จำนวนวัน..." min="0.25" step="0.25">
+                            </div>
+                            <div class="task-form-group">
+                                <label>&nbsp;</label>
+                                <button type="button" class="btn btn-warning btn-small" onclick="addAssignee()" id="addAssigneeBtn">+ เพิ่มผู้ทำ</button>
+                            </div>
+                        </div>
                     </div>
-                    <button type="button" class="btn btn-success btn-small" onclick="addTask()">เพิ่ม</button>
-                    <button type="button" class="btn btn-danger btn-small" id="cancelEditBtn" onclick="cancelEdit()" style="display: none;">ยกเลิก</button>
-                 </div>
+                </div>
 
                 <!-- Task List -->
                 <ul class="task-list" id="taskList">
@@ -903,6 +964,7 @@
         let currentEditingQuote = '';
         let currentTaskQuote = '';
         let editingTaskId = null;
+        let assigneeCount = 1; // จำนวนผู้ทำปัจจุบัน
 
         // Firebase Functions
         async function fetchQuotations() {
@@ -1191,6 +1253,126 @@
             `;
         }
 
+        // Assignee Management Functions
+        window.addAssignee = function() {
+            if (assigneeCount >= 5) return;
+            
+            assigneeCount++;
+            const container = document.getElementById('assigneeContainer');
+            
+            const assigneeRow = document.createElement('div');
+            assigneeRow.className = 'assignee-row';
+            assigneeRow.innerHTML = `
+                <div class="task-form-group flex-1">
+                    <label>ผู้ทำ ${assigneeCount}</label>
+                    <input type="text" class="assignee-input" placeholder="ชื่อผู้ทำ...">
+                </div>
+                <div class="task-form-group fixed-width">
+                    <label>Manday</label>
+                    <input type="number" class="manday-input" placeholder="จำนวนวัน..." min="0.25" step="0.25">
+                </div>
+                <div class="task-form-group">
+                    <label>&nbsp;</label>
+                    <button type="button" class="btn btn-danger btn-small" onclick="removeAssignee(this)">ลบ</button>
+                </div>
+            `;
+            
+            container.appendChild(assigneeRow);
+            
+            // ซ่อนปุ่มเพิ่มถ้าครบ 5 คน
+            if (assigneeCount >= 5) {
+                document.getElementById('addAssigneeBtn').style.display = 'none';
+            }
+        };
+
+        window.removeAssignee = function(button) {
+            if (assigneeCount <= 1) return;
+            
+            const row = button.closest('.assignee-row');
+            row.remove();
+            assigneeCount--;
+            
+            // แสดงปุ่มเพิ่มอีกครั้งถ้ายังไม่ครบ 5 คน
+            if (assigneeCount < 5) {
+                document.getElementById('addAssigneeBtn').style.display = 'block';
+            }
+            
+            // อัปเดตป้ายกำกับ
+            updateAssigneeLabels();
+        };
+
+        function updateAssigneeLabels() {
+            const rows = document.querySelectorAll('#assigneeContainer .assignee-row');
+            rows.forEach((row, index) => {
+                const label = row.querySelector('label');
+                if (index === 0) {
+                    label.textContent = 'ผู้ทำ';
+                } else {
+                    label.textContent = `ผู้ทำ ${index + 1}`;
+                }
+            });
+        }
+
+        function resetAssigneeForm() {
+            const container = document.getElementById('assigneeContainer');
+            // ลบแถวผู้ทำทุกแถวยกเว้นแถวแรก
+            const rows = container.querySelectorAll('.assignee-row');
+            for (let i = 1; i < rows.length; i++) {
+                rows[i].remove();
+            }
+            
+            // รีเซ็ตค่าในแถวแรก
+            const firstRow = container.querySelector('.assignee-row');
+            firstRow.querySelector('.assignee-input').value = '';
+            firstRow.querySelector('.manday-input').value = '';
+            
+            assigneeCount = 1;
+            document.getElementById('addAssigneeBtn').style.display = 'block';
+            updateAssigneeLabels();
+        }
+
+        function getAssigneeData() {
+            const assignees = [];
+            const rows = document.querySelectorAll('#assigneeContainer .assignee-row');
+            
+            rows.forEach(row => {
+                const name = row.querySelector('.assignee-input').value.trim();
+                const manday = row.querySelector('.manday-input').value;
+                
+                if (name || manday) {
+                    assignees.push({
+                        name: name,
+                        manday: manday ? parseFloat(manday) : 0
+                    });
+                }
+            });
+            
+            return assignees;
+        }
+
+        function setAssigneeData(assignees = []) {
+            resetAssigneeForm();
+            
+            if (assignees.length === 0) return;
+            
+            const container = document.getElementById('assigneeContainer');
+            const firstRow = container.querySelector('.assignee-row');
+            
+            // ตั้งค่าแถวแรก
+            if (assignees[0]) {
+                firstRow.querySelector('.assignee-input').value = assignees[0].name || '';
+                firstRow.querySelector('.manday-input').value = assignees[0].manday || '';
+            }
+            
+            // เพิ่มแถวสำหรับผู้ทำคนอื่นๆ
+            for (let i = 1; i < assignees.length && i < 5; i++) {
+                addAssignee();
+                const newRow = container.children[i];
+                newRow.querySelector('.assignee-input').value = assignees[i].name || '';
+                newRow.querySelector('.manday-input').value = assignees[i].manday || '';
+            }
+        }
+
         // Quotation Management
         window.openAddModal = function() {
             const year = new Date().getFullYear();
@@ -1310,6 +1492,7 @@
             
             renderTasks();
             updateTaskProgress();
+            resetTaskForm();
             document.getElementById('taskModal').style.display = 'block';
         }
 
@@ -1329,38 +1512,46 @@
                 return;
             }
             
-            taskList.innerHTML = quoteTasks.map(task => `
-                <li class="task-item" ${editingTaskId === task.id ? 'style="border: 2px solid #3498db;"' : ''}>
-                    <input type="checkbox" class="task-checkbox" ${task.status === 'done' ? 'checked' : ''} 
-                           onchange="toggleTask('${task.id}')">
-                    <div class="task-details">
-                        <div class="task-name">${task.name}</div>
-                        ${task.assignee ? `<div class="task-assignee">ผู้ทำ: ${task.assignee}</div>` : ''}
-                        ${task.manday ? `<div class="task-assignee">manday: ${task.manday}</div>` : ''}
-                        <select class="task-status-select" onchange="updateTaskStatus('${task.id}', this.value)">
-                            <option value="todo" ${task.status === 'todo' ? 'selected' : ''}>รอทำ</option>
-                            <option value="inprogress" ${task.status === 'inprogress' ? 'selected' : ''}>กำลังทำ</option>
-                            <option value="done" ${task.status === 'done' ? 'selected' : ''}>เสร็จแล้ว</option>
-                        </select>
-                    </div>
-                    <div style="display: flex; gap: 5px;">
-                        <button class="btn btn-warning btn-small" onclick="editTask('${task.id}')">แก้ไข</button>
-                        <button class="btn btn-danger btn-small" onclick="deleteTask('${task.id}')">ลบ</button>
-                    </div>
-                </li>
-            `).join('');
+            taskList.innerHTML = quoteTasks.map(task => {
+                let assigneeDisplay = '';
+                if (task.assignees && task.assignees.length > 0) {
+                    assigneeDisplay = task.assignees.map(assignee => 
+                        `<span class="task-assignee-item">${assignee.name}${assignee.manday ? ` (${assignee.manday}d)` : ''}</span>`
+                    ).join('');
+                }
+                
+                return `
+                    <li class="task-item" ${editingTaskId === task.id ? 'style="border: 2px solid #3498db;"' : ''}>
+                        <input type="checkbox" class="task-checkbox" ${task.status === 'done' ? 'checked' : ''} 
+                               onchange="toggleTask('${task.id}')">
+                        <div class="task-details">
+                            <div class="task-name">${task.name}</div>
+                            ${assigneeDisplay ? `<div class="task-assignee">${assigneeDisplay}</div>` : ''}
+                            <select class="task-status-select" onchange="updateTaskStatus('${task.id}', this.value)">
+                                <option value="todo" ${task.status === 'todo' ? 'selected' : ''}>รอทำ</option>
+                                <option value="inprogress" ${task.status === 'inprogress' ? 'selected' : ''}>กำลังทำ</option>
+                                <option value="done" ${task.status === 'done' ? 'selected' : ''}>เสร็จแล้ว</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; gap: 5px;">
+                            <button class="btn btn-warning btn-small" onclick="editTask('${task.id}')">แก้ไข</button>
+                            <button class="btn btn-danger btn-small" onclick="deleteTask('${task.id}')">ลบ</button>
+                        </div>
+                    </li>
+                `;
+            }).join('');
         }
 
         window.addTask = async function() {
             const taskName = document.getElementById('taskName').value.trim();
-            const taskAssignee = document.getElementById('taskAssignee').value.trim();
             const taskStatus = document.getElementById('taskStatus').value;
-            const taskManday = document.getElementById('taskManday').value;
             
             if (!taskName) {
                 alert('กรุณาใส่ชื่องาน');
                 return;
             }
+            
+            const assignees = getAssigneeData();
             
             if (!tasks[currentTaskQuote]) {
                 tasks[currentTaskQuote] = [];
@@ -1373,16 +1564,14 @@
                         const updatedTask = {
                             ...tasks[currentTaskQuote][taskIndex],
                             name: taskName,
-                            assignee: taskAssignee,
                             status: taskStatus,
-                            manday: taskManday
+                            assignees: assignees
                         };
                         
                         await updateTaskInFirebase(editingTaskId, {
                             name: taskName,
-                            assignee: taskAssignee,
                             status: taskStatus,
-                            manday: taskManday
+                            assignees: assignees
                         });
                         
                         tasks[currentTaskQuote][taskIndex] = updatedTask;
@@ -1391,9 +1580,8 @@
                 } else {
                     const newTask = {
                         name: taskName,
-                        assignee: taskAssignee,
                         status: taskStatus,
-                        manday: taskManday
+                        assignees: assignees
                     };
                     
                     const firebaseId = await saveTaskToFirebase(currentTaskQuote, newTask);
@@ -1418,9 +1606,10 @@
             
             editingTaskId = taskId;
             document.getElementById('taskName').value = task.name;
-            document.getElementById('taskAssignee').value = task.assignee || '';
             document.getElementById('taskStatus').value = task.status;
-            document.getElementById('taskManday').value = task.manday;
+            
+            // ตั้งค่าผู้ทำ
+            setAssigneeData(task.assignees || []);
             
             const addBtn = document.querySelector('.task-form .btn-success');
             addBtn.textContent = 'อัปเดต';
@@ -1439,9 +1628,8 @@
 
         function resetTaskForm() {
             document.getElementById('taskName').value = '';
-            document.getElementById('taskAssignee').value = '';
             document.getElementById('taskStatus').value = 'todo';
-            document.getElementById('taskManday').value = '';
+            resetAssigneeForm();
             
             const addBtn = document.querySelector('.task-form .btn-success');
             addBtn.textContent = 'เพิ่ม';
